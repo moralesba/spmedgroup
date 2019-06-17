@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Senai.SpMedGroup.WebApi.Manha.Domains;
@@ -45,7 +41,9 @@ namespace Senai.SpMedGroup.WebApi.Manha.Controllers
                 {
                     new Claim(JwtRegisteredClaimNames.Email, usuarioBuscado.Email),
                     new Claim(JwtRegisteredClaimNames.Jti, usuarioBuscado.IdUsuario.ToString()),
-                    new Claim(ClaimTypes.Role, usuarioBuscado.TipoUsuarioNavigation.Nome.ToString())
+                    new Claim(ClaimTypes.Role, usuarioBuscado.TipoUsuarioNavigation.Nome),
+                    new Claim("Permissao", usuarioBuscado.TipoUsuarioNavigation.Nome),
+                    new Claim("UsuarioTipo", usuarioBuscado.TipoUsuarioNavigation.Nome)
                 };
 
                 var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes("spmedgroup-chave-autenticacao"));

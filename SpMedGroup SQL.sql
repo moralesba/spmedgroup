@@ -52,6 +52,11 @@ create table consulta (
 	situação varchar (205)
 );
 
+select * from consulta
+alter table consulta alter column id_prontuario int not null
+alter table consulta add id_prontuario int foreign key references prontuario (id_prontuario) not null;
+alter table consulta drop id_prontuario;
+
 insert into tipo_usuario (nome)
 values ('Administrador'), ('Médico'), ('Paciente');
 
@@ -92,7 +97,7 @@ values	 ('07/02/2019 11:00', 3, 3, '-' ,'Realizada'),
 
 select * from consulta
 select * from medico
-select * from usuario;
+select * from usuario
 select * from tipo_usuario;
 
 select * from usuario inner join tipo_usuario
@@ -103,13 +108,14 @@ on m.id_usuario = u.id
 
 alter table clinica add Endereço varchar(50), Telefone char(14);
 alter table medico add id_usuario int foreign key references usuario(id_usuario)
-delete from prontuario where id_prontuario > '11'
+delete from usuario where id_usuario > '2030'
 update medico set id_usuario = 9 where id_medico = 1
 update medico set id_usuario = 10 where id_medico = 2
 update medico set id_usuario = 11 where id_medico = 3
-update clinica set endereco = 'São Paulo' where id = 2
-update clinica set nome = 'SP Medical Group' where id = 2
-update clinica set telefone = '27839947' where id = 2
+update clinica set endereco = 'São Paulo' where id_clinica = 2
+update clinica set nome = 'SP Medical Group' where id_clinica = 2
+update clinica set telefone = '27839947' where id_clinica = 2
+update usuario set nome = 'Henrique' where id_usuario = 4
 
 select count(*) from usuario
 
@@ -129,6 +135,9 @@ values ('Guilherme Moreno', 'guilherme@gmail.com', '123456', 2);
 
 insert into medico (nome, crm, id_clinica, id_especialidade, id_usuario)
 values ('Guilherme Moreno', '98374', 1, 2, 13);
+
+insert into consulta (dt_consulta, id_medico, id_prontuario, descricao, situacao)
+values	 ('14/05/2019 11:00', 3, 3, 'Consulta de rotina' ,'Agendada')
 
 update consulta set situação = 'Realizada' where id_consulta = 8;
 update prontuario set dtnasc_paciente = CAST('10-08-1991' as datetime) where id_prontuario = 7

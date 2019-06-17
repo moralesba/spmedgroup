@@ -17,7 +17,7 @@ namespace Senai.SpMedGroup.WebApi.Manha.Repositorios
         {
             using (SpMedGroupContext ctx = new SpMedGroupContext())
             {
-                return ctx.Usuario.Include(C => C.Medico).ToList();
+                return ctx.Usuario.Include(C => C.TipoUsuarioNavigation).ToList();
             }
         }
 
@@ -61,29 +61,38 @@ namespace Senai.SpMedGroup.WebApi.Manha.Repositorios
                         return usuario;
                     }
                 }
-                return null;
+                return null; 
             }
         }
         public void Deletar(int id)
+        {
+            using (SpMedGroupContext ctx = new SpMedGroupContext())
             {
-                using (SpMedGroupContext ctx = new SpMedGroupContext())
+                ctx.Usuario.Remove(ctx.Usuario.Find(id));
+                ctx.SaveChanges();
+            }
+        }
+
+        public void Alterar(Usuario usuario)
+        {
+            using (SpMedGroupContext ctx = new SpMedGroupContext())
+            {
+                Usuario usuarioExiste = ctx.Usuario.Find(usuario.IdUsuario);
+
+                if
+                (usuarioExiste.IdUsuario == usuario.IdUsuario)
                 {
-                    ctx.Usuario.Remove(ctx.Usuario.Find(id));
+                    usuarioExiste.Nome = usuario.Nome;
+                    usuarioExiste.Email = usuario.Email;
+                    usuarioExiste.Senha = usuario.Senha;
+                    usuarioExiste.TipoUsuario = usuario.TipoUsuario;
+                    usuarioExiste.TipoUsuarioNavigation = usuario.TipoUsuarioNavigation;
+
+                    ctx.Usuario.Update(usuarioExiste);
                     ctx.SaveChanges();
                 }
             }
-
-            public void Alterar(Usuario usuario)
-            {
-                using (SpMedGroupContext ctx = new SpMedGroupContext())
-                {
-                    Usuario usuarioExiste = ctx.Usuario.Find(usuario.IdUsuario);
-
-                    usuarioExiste.IdUsuario = usuario.IdUsuario;
-                    ctx.Usuario.Update(usuario);
-                    ctx.SaveChanges();
-                }
-            }
+        }
 
         public Usuario BuscarUsuario(int usuarioId)
         {

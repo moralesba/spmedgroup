@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Senai.SpMedGroup.WebApi.Manha.Context;
 using Senai.SpMedGroup.WebApi.Manha.Domains;
@@ -23,7 +19,7 @@ namespace Senai.SpMedGroup.WebApi.Manha.Controllers
             ProntuarioRepositorio = new ProntuarioRepositorio();
         }
 
-        [Authorize(Roles = "administrador")]
+        [Authorize(Roles = "Administrador")]
         [HttpGet]
         public IActionResult Get()
         {
@@ -33,11 +29,11 @@ namespace Senai.SpMedGroup.WebApi.Manha.Controllers
             }
             catch (System.Exception ex)
             {
-                return BadRequest();
+                return BadRequest(ex.Message);
             }
         }
 
-        [Authorize(Roles = "administrador")]
+        [Authorize(Roles = "Administrador")]
         [HttpPost]
         public IActionResult Post(Prontuario prontuario)
         {
@@ -57,7 +53,7 @@ namespace Senai.SpMedGroup.WebApi.Manha.Controllers
         }
 
         [HttpPut]
-        [Authorize(Roles = "administrador, medico")]
+        [Authorize(Roles = "Administrador, Medico")]
         public IActionResult Alterar(Prontuario prontuario)
         {
             try
@@ -71,7 +67,7 @@ namespace Senai.SpMedGroup.WebApi.Manha.Controllers
             }
         }
 
-        [Authorize(Roles = "administrador")]
+        [Authorize(Roles = "Administrador")]
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
@@ -83,7 +79,7 @@ namespace Senai.SpMedGroup.WebApi.Manha.Controllers
             return Ok();
         }
 
-        [Authorize(Roles = "administrador, cliente")]
+        [Authorize(Roles = "Administrador, Paciente")]
         [HttpGet("{prontuarioId}")]
         public IActionResult Get(int prontuarioId)
         {

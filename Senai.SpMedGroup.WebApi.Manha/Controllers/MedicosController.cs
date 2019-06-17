@@ -1,13 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Senai.SpMedGroup.WebApi.Manha.Context;
 using Senai.SpMedGroup.WebApi.Manha.Domains;
 using Senai.SpMedGroup.WebApi.Manha.Interfaces;
@@ -26,7 +19,7 @@ namespace Senai.SpMedGroup.WebApi.Manha.Controllers
             MedicoRepositorio = new MedicoRepositorio();
         }
 
-        [Authorize(Roles = "administrador")]
+        [Authorize(Roles = "Administrador")]
         [HttpGet]
         public IActionResult Get()
         {
@@ -40,7 +33,7 @@ namespace Senai.SpMedGroup.WebApi.Manha.Controllers
             }
         }
 
-        [Authorize(Roles = "administrador")]
+        [Authorize(Roles = "Administrador")]
         [HttpPost]
         public IActionResult Post(Medico medico)
         {
@@ -59,7 +52,7 @@ namespace Senai.SpMedGroup.WebApi.Manha.Controllers
         }
 
         [HttpPut]
-        [Authorize(Roles = "administrador, medico")]
+        [Authorize(Roles = "Administrador, Medico")]
         public IActionResult Alterar(Medico medico)
         {
             try
@@ -73,7 +66,7 @@ namespace Senai.SpMedGroup.WebApi.Manha.Controllers
             }
         }
 
-        [Authorize(Roles = "administrador")]
+        [Authorize(Roles = "Administrador")]
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
@@ -85,7 +78,7 @@ namespace Senai.SpMedGroup.WebApi.Manha.Controllers
             return Ok();
         }
 
-        [Authorize(Roles = "administrador, medico")]
+        [Authorize(Roles = "Administrador, Medico")]
         [HttpGet("{medicoId}")]
         public IActionResult Get(int medicoId)
         {

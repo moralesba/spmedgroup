@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Senai.SpMedGroup.WebApi.Manha.Context;
@@ -21,7 +20,7 @@ namespace Senai.SpMedGroup.WebApi.Manha.Controllers
             UsuarioRepositorio = new UsuarioRepositorio();
         }
 
-        [Authorize (Roles = "administrador")]
+        [Authorize (Roles = "Administrador")]
         [HttpGet]
         public IActionResult Get()
         {
@@ -31,11 +30,11 @@ namespace Senai.SpMedGroup.WebApi.Manha.Controllers
             }
             catch (System.Exception ex)
             {
-                return BadRequest();
+                return BadRequest(ex.Message);
             }
         }
 
-        [Authorize(Roles = "administrador")]
+        [Authorize(Roles = "Administrador")]
         [HttpPost]
         public IActionResult Post(Usuario usuario)
         {
@@ -48,28 +47,30 @@ namespace Senai.SpMedGroup.WebApi.Manha.Controllers
                     mensagem = "Usuário Cadastrado"
                 });
             }
-            catch
+            catch (SystemException ex)
             {
-                return BadRequest();
+                return BadRequest(ex.Message);
             }
         }
 
+        [Authorize(Roles = "Administrador, Professor")]
         [HttpPut]
-        [Authorize(Roles = "administrador, medico")]
         public IActionResult Alterar(Usuario usuario)
         {
             try
             {
                 UsuarioRepositorio.Alterar(usuario);
-                return Ok(UsuarioRepositorio.Listar());
+                return Ok(new { mensagem = "Usuario Alterado" });
             }
-            catch (Exception ex)
+
+            catch (SystemException ex)
             {
-                return BadRequest();
+                return BadRequest(ex.Message);
             }
+
         }
 
-        [Authorize(Roles = "administrador")]
+        [Authorize(Roles = "Administrador")]
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
@@ -78,11 +79,11 @@ namespace Senai.SpMedGroup.WebApi.Manha.Controllers
                 ctx.Usuario.Remove(ctx.Usuario.Find(id));
                 ctx.SaveChanges();
             }
-            return Ok();
+            return Ok((new { mensagem = "Usuario Deletado" }));
         }
 
         // Lista um único Usuario especifico
-        [Authorize(Roles = "administrador")]
+        [Authorize(Roles = "Administrador")]
         [HttpGet("{usuarioId}")]
         public IActionResult GetUsuario(int usuarioId)
         {

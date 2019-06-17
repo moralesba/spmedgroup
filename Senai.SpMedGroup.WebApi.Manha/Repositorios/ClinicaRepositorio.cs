@@ -1,4 +1,5 @@
-﻿using Senai.SpMedGroup.WebApi.Manha.Context;
+﻿using Microsoft.EntityFrameworkCore;
+using Senai.SpMedGroup.WebApi.Manha.Context;
 using Senai.SpMedGroup.WebApi.Manha.Domains;
 using Senai.SpMedGroup.WebApi.Manha.Interfaces;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace Senai.SpMedGroup.WebApi.Manha.Repositorios
         {
             using (SpMedGroupContext ctx = new SpMedGroupContext())
             {
-                return ctx.Clinica.ToList();
+                return ctx.Clinica.Include(C => C.Medico).ToList();
             }
         }
 

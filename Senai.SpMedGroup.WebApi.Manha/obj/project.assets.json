@@ -12647,11 +12647,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\47015374897\\Desktop\\Senai.SpMedGroup.WebApi.Manha\\Senai.SpMedGroup.WebApi.Manha\\Senai.SpMedGroup.WebApi.Manha.csproj",
+      "projectUniqueName": "C:\\Users\\47015374897\\Desktop\\SpMedGroup\\Senai.SpMedGroup.WebApi.Manha\\Senai.SpMedGroup.WebApi.Manha.csproj",
       "projectName": "Senai.SpMedGroup.WebApi.Manha",
-      "projectPath": "C:\\Users\\47015374897\\Desktop\\Senai.SpMedGroup.WebApi.Manha\\Senai.SpMedGroup.WebApi.Manha\\Senai.SpMedGroup.WebApi.Manha.csproj",
+      "projectPath": "C:\\Users\\47015374897\\Desktop\\SpMedGroup\\Senai.SpMedGroup.WebApi.Manha\\Senai.SpMedGroup.WebApi.Manha.csproj",
       "packagesPath": "C:\\Users\\47015374897\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\47015374897\\Desktop\\Senai.SpMedGroup.WebApi.Manha\\Senai.SpMedGroup.WebApi.Manha\\obj\\",
+      "outputPath": "C:\\Users\\47015374897\\Desktop\\SpMedGroup\\Senai.SpMedGroup.WebApi.Manha\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

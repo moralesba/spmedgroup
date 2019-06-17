@@ -8,11 +8,11 @@ namespace Senai.SpMedGroup.WebApi.Manha.Interfaces
 {
     public interface IConsultaRepositorio
     {
-        List<Consulta> Listar();
+        List<Consulta> Listar(int idrecebido, string tipousuario);
         void Cadastrar(Consulta consulta);
         void Deletar(int id);
         void Alterar(Consulta consulta);
-        Consulta BuscarConsulta(int consultaId);
+        List<Consulta> BuscarConsulta(int consultaId);
         List<Consulta> BuscarConsultasMedico(int medicoId);
         List<Consulta> BuscarConsultasPaciente(int prontuarioId);
     }

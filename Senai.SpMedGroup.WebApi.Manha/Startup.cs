@@ -21,7 +21,8 @@ namespace Senai.SpMedGroup.WebApi.Manha
 
             services.AddCors(options =>
             {
-                options.AddPolicy("CorsPolicy", builder => builder.AllowAnyOrigin()
+                options.AddPolicy("CorsPolicy",
+                    builder => builder.AllowAnyOrigin()
                         .AllowAnyMethod()
                         .AllowAnyHeader()
                         .AllowCredentials());

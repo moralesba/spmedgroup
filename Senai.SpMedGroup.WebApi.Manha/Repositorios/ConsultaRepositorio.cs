@@ -19,14 +19,6 @@ namespace Senai.SpMedGroup.WebApi.Manha.Repositorios
             }
         }
 
-        public List<Consulta> Listar()
-        {
-            using (SpMedGroupContext ctx = new SpMedGroupContext())
-            {
-                return ctx.Consulta.ToList();
-            }
-        }
-
         public void Deletar(int id)
         {
             using (SpMedGroupContext ctx = new SpMedGroupContext())
@@ -36,25 +28,50 @@ namespace Senai.SpMedGroup.WebApi.Manha.Repositorios
             }
         }
 
-        public void Alterar(Consulta consulta)
+        public void Alterar(Consulta consulta, int id)
         {
             using (SpMedGroupContext ctx = new SpMedGroupContext())
             {
                 Consulta consultaExiste = ctx.Consulta.Find(consulta.IdConsulta);
 
                 consultaExiste.IdConsulta = consulta.IdConsulta;
-                ctx.Consulta.Update(consulta);
+                ctx.Consulta.Update(consultaExiste);
                 ctx.SaveChanges();
             }
         }
 
-        public Consulta BuscarConsulta(int consultaId)
+
+        public void Alterar(Consulta consulta)
         {
-            Consulta consultaBuscada = new Consulta();
+            using (SpMedGroupContext ctx = new SpMedGroupContext())
+            {
+                Consulta consultaExiste = ctx.Consulta.Find(consulta.IdConsulta);
+
+                if
+                (consultaExiste.IdConsulta == consulta.IdConsulta)
+                { 
+                    consultaExiste.DtConsulta = consulta.DtConsulta;
+                    consultaExiste.IdMedico = consulta.IdMedico;
+                    consultaExiste.IdUsuario = consulta.IdUsuario;
+                    consultaExiste.Descricao = consulta.Descricao;
+                    consultaExiste.Situacao = consulta.Situacao;
+                    consultaExiste.IdMedicoNavigation = consulta.IdMedicoNavigation;
+                    consultaExiste.IdProntuarioNavigation = consulta.IdProntuarioNavigation;
+
+                    ctx.Consulta.Update(consultaExiste);
+                    ctx.SaveChanges();
+                }
+            }
+        }
+
+        public List<Consulta> BuscarConsulta(int consultaId)
+        {
+            List<Consulta> consultaBuscada = new List<Consulta>();
 
             using (SpMedGroupContext ctx = new SpMedGroupContext())
             {
-                consultaBuscada = ctx.Consulta.ToList().Find(c => c.IdConsulta == consultaId);
+                consultaBuscada = ctx.Consulta.ToList().FindAll(c => c.IdConsulta == consultaId);
+                consultaBuscada = ctx.Consulta.Include(C => C.IdMedicoNavigation).ToList();
             }
 
             return consultaBuscada;
@@ -72,16 +89,42 @@ namespace Senai.SpMedGroup.WebApi.Manha.Repositorios
             return consultasMedico;
         }
 
-        public List<Consulta> BuscarConsultasPaciente(int prontuarioId)
+        public List<Consulta> BuscarConsultasPaciente(int usuarioId)
         {
             List<Consulta> consultasPaciente = new List<Consulta>();
 
             using (SpMedGroupContext ctx = new SpMedGroupContext())
             {
-                consultasPaciente = ctx.Consulta.ToList().FindAll(c => c.IdProntuario == prontuarioId);
+                consultasPaciente = ctx.Consulta.ToList().FindAll(c => c.IdUsuario == usuarioId);
+                consultasPaciente = ctx.Consulta.Include(C => C.IdMedicoNavigation).ToList();
             }
 
             return consultasPaciente;
+        }
+
+        public List<Consulta> Listar(int idrecebido, string tipousuario)
+        {
+            List<Consulta> listaConsultaBuscada = new List<Consulta>();
+
+            using (SpMedGroupContext ctx = new SpMedGroupContext())
+            {
+                if (tipousuario == "Administrador")
+                {
+                    listaConsultaBuscada = ctx.Consulta.Include(C => C.IdMedicoNavigation).ToList();
+                }
+                else if (tipousuario == "Medico")
+                {
+                    Medico medicoBuscado = ctx.Medico.ToList().Find(c => c.IdUsuario == idrecebido);
+                    listaConsultaBuscada = ctx.Consulta.Where(c => c.IdMedico == medicoBuscado.IdMedico).ToList();
+                }
+                else
+                {
+                    Usuario usuarioBuscado = ctx.Usuario.ToList().Find(c => c.IdUsuario == idrecebido);
+                    listaConsultaBuscada = ctx.Consulta.Where(c => c.IdUsuario == usuarioBuscado.IdUsuario).Include(X => X.IdMedicoNavigation).ToList();
+                }
+
+                return listaConsultaBuscada;
+            }
         }
     }
 }

@@ -65,8 +65,8 @@ namespace Senai.SpMedGroup.WebApi.Manha.Context
 
                 entity.Property(e => e.IdConsulta).HasColumnName("id_consulta");
 
-                entity.Property(e => e.Descrição)
-                    .HasColumnName("descrição")
+                entity.Property(e => e.Descricao)
+                    .HasColumnName("descricao")
                     .HasMaxLength(205)
                     .IsUnicode(false);
 
@@ -76,10 +76,10 @@ namespace Senai.SpMedGroup.WebApi.Manha.Context
 
                 entity.Property(e => e.IdMedico).HasColumnName("id_medico");
 
-                entity.Property(e => e.IdProntuario).HasColumnName("id_prontuario");
+                entity.Property(e => e.IdUsuario).HasColumnName("Id_usuario");
 
-                entity.Property(e => e.Situação)
-                    .HasColumnName("situação")
+                entity.Property(e => e.Situacao)
+                    .HasColumnName("situacao")
                     .HasMaxLength(205)
                     .IsUnicode(false);
 
@@ -90,7 +90,7 @@ namespace Senai.SpMedGroup.WebApi.Manha.Context
 
                 entity.HasOne(d => d.IdProntuarioNavigation)
                     .WithMany(p => p.Consulta)
-                    .HasForeignKey(d => d.IdProntuario)
+                    .HasForeignKey(d => d.IdUsuario)
                     .HasConstraintName("FK__consulta__id_pro__4AB81AF0");
             });
 
